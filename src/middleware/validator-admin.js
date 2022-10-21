@@ -7,7 +7,7 @@ const validateRole = async (request, response, next) => {
     if (user.role === 'USER') {
         return response.status(401).send({
             ok: false,
-            error: 'The user not permission of admin',
+            error: 'El usuario no tiene permiso de administrador.',
         });
     }
 

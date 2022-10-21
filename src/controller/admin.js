@@ -6,7 +6,7 @@ const unlockUser = async (req, res) => {
         if (!user) {
             return res.status(400).json({
                 succes: false,
-                error: 'the email entered does not exist'
+                error: 'el correo ingresado no existe'
             });
         }
         user.status = true;
@@ -14,12 +14,12 @@ const unlockUser = async (req, res) => {
         await user.save();
         return res.status(200).json({
             succes: true,
-            message: 'the user has been unlocked'
+            message: 'El usuario ha sido desbloqueado(masculino)'
         })
     } catch (error) {
         return res.status(500).json({
             succes: false,
-            message: 'the user has not been unlocked',
+            message: 'El usuario no ha sido desbloqueado.',
             error: error.message,
         })
     }
@@ -29,7 +29,7 @@ const unlocked = async (req, res) => {
         const user = await User.find({ status: false });
         if (!user || user.length === 0) return res.status(400).json({
             success: false,
-            message: 'There are no users blocked'
+            message: 'Aquí no hay usuarios bloqueados'
         });
 
         return res.status(200).json({
@@ -39,7 +39,7 @@ const unlocked = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             success: false,
-            message: 'server error',
+            message: 'error servidor',
             error: error.message
         });
     }

@@ -2,7 +2,7 @@ const User = require('../models/user');
 const { generateJWT } = require('../helper/jwt');
 const bcrypt = require('bcryptjs');
 const password = require('../helper/generate-password');
-const sendEmail = require('../helper/nodemailer');
+//const sendEmail = require('../helper/nodemailer');
 
 const signUp = async (req, res) => {
     const { email } = req.body;
@@ -11,8 +11,8 @@ const signUp = async (req, res) => {
         if (validation) {
             return res.status(400).json({
                 succes: false,
-                error: `The user already exists try with a new one ${email}`,
-                error: 'The email already exists'
+                error: `El usuario ya existe prueba con uno nuevo ${email}`,
+                error: 'El correo ya existe'
             });
         }
         validation = new User(req.body);
@@ -24,12 +24,12 @@ const signUp = async (req, res) => {
         await validation.save().then((usuario) => {
             res.json({ mensaje: "Usuario creado correctamente", usuario });
         })
-        .catch((error) => console.error(error));;
-        await sendEmail({
+        .catch((error) => console.error(error));
+     /*   await sendEmail({
             email: validation.email,
             subject: 'Welcome to NOTES',
             message: `Hi ${validation.name} ${validation.lastName},we send you the password to enter ---${password}---- remember that you must change the password in the first login, thank you for registering in our web application.`
-        })
+       })*/
         const token = await generateJWT(
             validation.id,
             validation.name,
@@ -51,10 +51,8 @@ const signUp = async (req, res) => {
     
 
     } catch (error) {
-        return res.status(500).json({
-            succes: false,
-            error: error.message
-        })
+       console.log('aqui llegue')
+      //console.log(error)
 
     }
 }
@@ -66,13 +64,12 @@ const signIn = async (req, res) => {
         if (!validation) {
             return res.status(400).json({
                 succes: false,
-                error: 'the email entered is not registered please check it',
-                namError: 'mail not found'
+                error: 'el correo electrónico ingresado no está registrado por favor verifíquelo',
+                namError: 'email no encontrado'
             });
         }
         
-   
-        const compareValidation2 = bcrypt.compare(password, validation.password);
+
         const compareValidation = bcrypt.compareSync(password, validation.password);
 
         if (!compareValidation && validation.state == true) {
@@ -85,14 +82,14 @@ const signIn = async (req, res) => {
             }
             return res.status(400).json({
                 succes: false,
-                error: 'the password entered is incorrect',
-                error: 'Incorrect password'
+                error: 'la contraseña ingresada es incorrecta',
+                error: 'contrasena incorrecta'
             });
         }
         if (validation.state === false) {
             return res.status(400).json({
                     succes: false,
-                    error: 'ha escrito mal tres veces la contraseña su usuario sera descativado',
+                    error: 'ha escrito tres veces mal la contraseña, su usuario sera descativado',
                 }) 
         }
         validation.attempts = 0;
@@ -131,14 +128,14 @@ const changeOfPassword = async (req, res) => {
         if (!validation) {
             return res.status(400).json({
                 succes: false,
-                error: 'the email entered does not exist'
+                error: 'el correo ingresado no existe'
             });
         }
         const result = validation.oldPassword.some(old => bcrypt.compareSync(newPassword, old)); // boolean
         if (result) {
             return res.status(400).json({
                 succes: false,
-                error: 'The password entered has already been used, please enter a different one',
+                error: 'La contraseña ingresada ya ha sido utilizada, por favor ingrese una diferente',
             });
         } else {
             if (validation.oldPassword.length === 2) {
@@ -169,20 +166,21 @@ const forgotPassword =async(req,res)=>{
     if (!user) {
         return res.status(400).json({
             succes: false,
-            error: 'the email entered does not exist'
+            error: 'el correo ingresado no existe'
         });
     }
     const salt = bcrypt.genSaltSync(10);
     user.password = bcrypt.hashSync(password, salt);
     await user.save();
+    /*
     await sendEmail({
         email: user.email,
         subject: 'ForgotPassword',
-        message: `Hi your new password is ${password} `
-    })
+        message: `Hola tu nueva contraseña es ${password} `
+    })*/
     return res.status(200).json({
         succes: true,
-        message: 'the password has been sent to your email'
+        message: 'La contraseña ha sido enviada a su correo electrónico'
     });
         
     } catch (error) {
@@ -199,7 +197,7 @@ const validationToken  =async (req,res)=>{
     try {
         res.status(200).json({
             succes:true,
-            message:' toke is valid'
+            message:'El token es valido'
         })
     } catch (error) {
         res.status(200).json({

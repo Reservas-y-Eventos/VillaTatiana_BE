@@ -9,12 +9,15 @@ app.use(express.json());
 app.use(cors());
 //settings
 app.set('port', process.env.PORT || 5000);
-//routes
+//routas del ususario
 app.use('/api/user',require('./routes/auth'));
 
 app.use('/api/note',require('./routes/notes'));
+//rutas del formulario
+app.use('/api/form',require('./routes/forms'));
 app.use('/api/admin',require('./routes/admin'));
+//app.use('/api/form',require('./routes/forms'));
 
 app.listen(app.get('port'), () => {
-    console.log('server on port', app.get('port'));
+    console.log('servidor en el puerto', app.get('port'));
 });  

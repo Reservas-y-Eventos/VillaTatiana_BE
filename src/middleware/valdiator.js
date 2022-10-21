@@ -8,7 +8,7 @@ const validator=(req,res= response,next) =>{
     if (!token) {
         return res.status(500).json({
             success:false,
-            message: 'dont exists token in header '
+            message: 'no existe token en el encabezado'
         });
     }
     try {
@@ -27,7 +27,7 @@ const validator=(req,res= response,next) =>{
     } catch (error) {
         return res.status(401).json({
             success:false,
-            message:'the token is invalid'
+            message:'el token no es válido'
         });
     }
     next();

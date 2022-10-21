@@ -11,15 +11,12 @@ router.post('/signUp', signUp );
 //inicio de sesion
 router.post('/signIn', signIn );
 
-
-
-
 router.put('/firsLogin/:email',[check('newPassword').isStrongPassword({
         minLowercase: 1,
         minUppercase: 1, 
         minNumbers: 1, 
         minSpecialChar: 1,
-}).withMessage("Password must be greater than 8 and contain at least one uppercase letter, one lowercase letter, and one number"),validateResult],changeOfPassword);
+}).withMessage("La contraseña debe ser mayor que 8 y contener al menos una letra mayúscula, una letra minúscula y un número"),validateResult],changeOfPassword);
 router.post('/forgotpassword',forgotPassword);
 router.get('/validationToken',validator,validationToken)
 
