@@ -1,24 +1,24 @@
 const {Schema,model} = require('mongoose');
-const formShema =  new Schema({
-    date:{
-        type:String,
-        required:true
-    },
+const siteShema =  new Schema({
     name:{
         type:String,
         required:true
     },
-    phone:{
+    type:{
         type:String,
         required:true
     },
-    email:{
+    price:{
         type:String,
         required:true
     },
-    service: {
+    state:{
+        type:Boolean,
+        default: true
+    },
+    description: {
         type: String,
         required:true
     }
 },{timestamps:true});
-module.exports = model("Forms", formShema);
+module.exports = model("Sites", siteShema);

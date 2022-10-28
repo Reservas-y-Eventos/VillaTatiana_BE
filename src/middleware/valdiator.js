@@ -12,6 +12,8 @@ const validator=(req,res= response,next) =>{
         });
     }
     try {
+        //'DAN-AUD-ALE'
+        // process.env.SECRET_JWT
         const {id,name,lastName,phone,email,userName,firstLogin,state} = jwt.verify(
             token,
             process.env.SECRET_JWT

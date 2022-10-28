@@ -11,8 +11,6 @@ app.use(cors());
 app.set('port', process.env.PORT || 5000);
 //routas del ususario
 app.use('/api/user',require('./routes/auth'));
-
-app.use('/api/note',require('./routes/notes'));
 //rutas del formulario
 app.use('/api/form',require('./routes/forms'));
 app.use('/api/admin',require('./routes/admin'));

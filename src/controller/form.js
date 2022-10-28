@@ -1,31 +1,67 @@
 const Form = require('../models/form.js');
+const Sites = require('../models/sites.js');
 
-
+//CREAR RESERVACION EN EL CALENDARIO
 const createReservation = async (req,res)=>{
-    const {date,name,phone,email,place} = req.body;
+    const {date,name,phone,email,service} = req.body;
+    const valido = true;
 
     try {
-        let validation = await Form.findOne({ date });
-        if (validation) {
+        let validation = await Form.find({ date });
+        if(validation.length>=1){
+        if(validation[0].service == "finca"){
             return res.status(400).json({
                 succes: false,
-                error: 'ya se reservo en dicha fecha'
+                error: 'ya se reservo toda la finca, no puede reservar un sitio'
+            });
+        }else if(validation[0].service != "finca" && service=="finca"){
+            return res.status(400).json({
+                succes: false,
+                error: 'no puede reservar la finca, ya se reservo un sitio menor'
             });
         }else{
-            const newReservation = new Form({
-                date,
-                name,
-                phone,
-                email,
-                place
-            });
-            newReservation.save();
-            return res.status(200).json({
-                succes:true,
-                newReservation
-            });
+            for (var i = 0; i < validation.length; i++) {
+                if(validation[i].service == service){
+                    valido == false
+                        return res.status(400).json({
+                            succes: false,
+                            error: 'ya se reservo en la fecha: '+ date + ' ,el servicio: '+ service
+                        });
+                    }
+                }
+                if(valido == true){
+                    const newReservation = new Form({
+                        date,
+                        name,
+                        phone,
+                        email,
+                        service
+                    });
+                    newReservation.save();
+                    return res.status(200).json({
+                        succes:true,
+                        newReservation
+                    }); 
+                }  
         }
-    
+                     
+            }else if (validation.length==0){
+                const newReservation = new Form({
+                    date,
+                    name,
+                    phone,
+                    email,
+                    service
+                });
+                newReservation.save();
+                return res.status(200).json({
+                    succes:true,
+                    newReservation
+                });
+            }
+
+          
+          
     } catch (error) {
         return res.status(500).json({
             succes:false,
@@ -34,6 +70,8 @@ const createReservation = async (req,res)=>{
         
     }
 }
+
+//BUSCAR RESERVACION EN EL CALENDARIO POR ID
 const getReservation = async(req,res)=>{
     const {reservationId} = req.params;
     try {
@@ -51,6 +89,8 @@ const getReservation = async(req,res)=>{
 
 }
 
+
+//BUSCAR TODAS LAS RESERVACIONES
 const getReservations =async(req,res)=>{
     try {
         const reservation = await Form.find();
@@ -66,6 +106,8 @@ const getReservations =async(req,res)=>{
     }
     
 }
+
+//ACTUALIZAR DATOS DE UNA RESERVACION EN EL CALENDARIO
 const updateReservation = async(req,res) =>{
     const {reservationId} = req.params;
     try {
@@ -90,6 +132,7 @@ const updateReservation = async(req,res) =>{
     
 }
 
+//ELIMINAR RESERVACION EN EL CALENDARIO
 const deleteReservation = async(req,res)=>{
     const {reservationId} = req.params;
     console.log(reservationId);
@@ -107,11 +150,53 @@ const deleteReservation = async(req,res)=>{
     }
 }
 
+//TRAER TODOS LOS SITIOS A RESERVAR EN EL CALENDARIO
+const getSites = async(req,res)=>{
+    const {name} = req.body;
+    try {
+        const reservation = await Sites.find({ name });
+        
+
+        return res.status(200).json({
+            succes:true,
+            reservation
+        })
+    } catch (error) {
+        return res.status(500).json({
+            succes:false,
+            error: error.message
+        });
+    }
+
+}
+//TRAER UN TIPO DE SITIO A RESERVAR EN EL CALENDARIO
+const getSite = async(req,res)=>{
+    const {type} = req.body;
+    try {
+        const reservation = await Sites.findOne({ type });
+        return res.status(200).json({
+            succes:true,
+            reservation
+        })
+    } catch (error) {
+        return res.status(500).json({
+            succes:false,
+            error: error.message
+        });
+    }
+
+}
+
+
+
 module.exports= {
     createReservation,
     getReservation,
     getReservations,
     updateReservation,
-    deleteReservation
+    deleteReservation,
+    getSites,
+    getSite,
+
 
 }
