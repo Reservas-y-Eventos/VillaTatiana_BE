@@ -14,7 +14,7 @@ app.use('/api/user',require('./routes/auth'));
 //rutas del formulario
 app.use('/api/form',require('./routes/forms'));
 app.use('/api/admin',require('./routes/admin'));
-app.use('/api/item', require('./routes/item'));
+app.use('/api/item',require('./routes/item'));
 //app.use('/api/form',require('./routes/forms'));
 
 app.listen(app.get('port'), () => {
