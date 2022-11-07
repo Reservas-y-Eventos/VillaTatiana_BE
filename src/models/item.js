@@ -16,7 +16,8 @@ const itemShema = new Schema({
     },
     type:{
         type: String,
-        enum: ['KITCHENWARE', 'ENTERTAINMENT']
+        enum: ['KITCHENWARE', 'ENTERTAINMENT'],
+        require:true
     },
     stock:{
         type: Number,

@@ -29,6 +29,22 @@ const createItem= async (req,res)=>{
     
 
 }
+
+const listItem = async (req, res) => {
+    try {
+        const items = await item.find();
+        return res.status(200).json({
+            succes:true,
+            items
+        })
+    } catch (error) {
+        return res.status(500).json({
+            succes:false,
+            error: error.message
+        });
+    }
+}
 module.exports = {
-    createItem
+    createItem,
+    listItem
 }
