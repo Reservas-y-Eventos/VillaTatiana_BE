@@ -22,6 +22,10 @@ const itemShema = new Schema({
     stock:{
         type: Number,
         require:true
-    }
+    },
+    user:[{
+        type: [Schema.Types.ObjectId],
+        ref: 'user'
+    }]
 },{timestamps:true});
 module.exports = model("Item", itemShema);
