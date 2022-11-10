@@ -14,11 +14,12 @@ const validator=(req,res= response,next) =>{
     try {
         //'DAN-AUD-ALE'
         // process.env.SECRET_JWT
-        const {id,name,lastName,phone,email,userName,firstLogin,state} = jwt.verify(
+        const {id,dni,name,lastName,phone,email,userName,firstLogin,state} = jwt.verify(
             token,
             process.env.SECRET_JWT
         );
         req.id =id,
+        req.dni = dni,
         req.name=name,
         req.lastName = lastName,
         req.phone = phone,

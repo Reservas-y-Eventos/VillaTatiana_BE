@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
 const userSchema = new Schema({
+    dni: {
+        type: String,
+        required: true
+    },
     name: {
         type: String,
         required: true

@@ -3,14 +3,14 @@ const Item = require('../models/item');
 const User = require('../models/user');
 
 const createRenting = async (req, res) => {
-    const {item,user,amount}= req.body;
+    const {name,dni,amount}= req.body;
 
     try{
-        let findItem = await Item.findOne({_name:item});
+        let findItem = await Item.findOne({name});
         if(findItem){
-            let findUser = await User.findOne({_cedula:user});
+            let findUser = await User.findOne({dni});
             if(findUser){
-                let newRenting = await Renting.findOne({_user:user});
+                let newRenting = await Renting.findOne({dni});
                 if(newRenting){
                     return res.status(400).json({
                         succes: false,
@@ -27,7 +27,7 @@ const createRenting = async (req, res) => {
 
                 }
                 const itemUpdate = await Item.updateOne(
-                    {_name:item},
+                    {name},
                     {$set:{'stock':stock1}},
                 );
                 newRenting = new Renting (req.body);
@@ -67,7 +67,8 @@ const updateRenting = async (req, res) => {
     try{
         const findRenting = await Renting.findById({_id:id});
         if(findRenting){
-            const findItem = await Item.findOne({_name:findRenting.item});
+            let name= findRenting.name;
+            const findItem = await Item.findOne({name});
             let stock1= findItem.stock-sum;
             if(stock1<0){
                 return res.status(400).json({
@@ -76,7 +77,7 @@ const updateRenting = async (req, res) => {
                 });
             }
             const updateItem = await Item.updateOne(
-                {_name:findItem.name},
+                {name},
                 {$set:{'stock':stock1}}
 
             )
@@ -107,7 +108,8 @@ const deleteRenting = async (req, res) => {
         const deleteRenting = await Renting.findByIdAndDelete({_id:id});
         return res.status(200).json({
             succes:true,
-            deleteRenting
+            deleteRenting,
+            message:'Renta eliminada con exito'
         });
 
 

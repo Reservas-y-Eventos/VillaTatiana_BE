@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 const {Schema,model}= mongoose;
 
 const rentingShema = new Schema ({
-    item:{
+    name:{
         type:String,
         require:true
     },
-    user:{
-        type:string,
+    dni:{
+        type: String,
         require:true
     },
     amount:{
