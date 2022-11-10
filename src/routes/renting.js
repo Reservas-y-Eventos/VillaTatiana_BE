@@ -6,7 +6,7 @@ const router = Router();
 router.post('/createRenting', createRenting);
 router.put('/updateRenting/:id', updateRenting);
 router.delete('/deleteRenting/:id', deleteRenting);
-router.get('/listRenting/:name', listRenting);
+router.get('/listRenting', listRenting);
 
 
 

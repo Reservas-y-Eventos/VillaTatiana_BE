@@ -132,13 +132,22 @@ const deleteRenting = async (req, res) => {
 }
 
 const listRenting = async (req, res) => {
-    const {name}= req.params;
+    const {name}=req.body;
     try {
+        const info =[];
         const rents = await Renting.find({name});
+        for (let i = 0; i < rents.length; i++ ){
+            let dni = rents[i].dni;
+            const findUser = await User.findOne({dni});
+            info.push(findUser);
+        }
         return res.status(200).json({
             succes:true,
-            rents
+            rents,
+            info
         })
+
+        
     } catch (error) {
         return res.status(500).json({
             succes:false,
