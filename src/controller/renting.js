@@ -11,7 +11,7 @@ const createRenting = async (req, res) => {
             let findUser = await User.findOne({dni});
             if(findUser){
                 let newRenting = await Renting.findOne({dni});
-                if(newRenting){
+                if(newRenting && newRenting.name==name){
                     return res.status(400).json({
                         succes: false,
                         error: 'El usuario ya hizo alquiler de este item, cancele el alquiler o modifique la cantidad si desea alquilar mas items de este tipo'
@@ -131,8 +131,25 @@ const deleteRenting = async (req, res) => {
     }
 }
 
+const listRenting = async (req, res) => {
+    const {name}= req.params;
+    try {
+        const rents = await Renting.find({name});
+        return res.status(200).json({
+            succes:true,
+            rents
+        })
+    } catch (error) {
+        return res.status(500).json({
+            succes:false,
+            error: error.message
+        });
+    }
+}
+
 module.exports={
     createRenting,
     updateRenting,
-    deleteRenting
+    deleteRenting,
+    listRenting
 }
