@@ -3,7 +3,7 @@ const {Schema,model}= mongoose;
 
 const itemShema = new Schema({
     name:{
-        type:String,
+        type: String,
         require:true
     },
     time:{

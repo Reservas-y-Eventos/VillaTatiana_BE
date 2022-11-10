@@ -32,6 +32,7 @@ const signUp = async (req, res) => {
        })*/
         const token = await generateJWT(
             validation.id,
+            validation.dni,
             validation.name,
             validation.lastName,
             validation.phone,
@@ -95,6 +96,7 @@ const signIn = async (req, res) => {
         validation.attempts = 0;
         await validation.save();
         const token = await generateJWT(
+            validation.dni,
             validation.name,
             validation.lastName,
             validation.phone,

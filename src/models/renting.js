@@ -7,7 +7,7 @@ const rentingShema = new Schema ({
         require:true
     },
     user:{
-        type:string,
+        type: String,
         require:true
     },
     amount:{
