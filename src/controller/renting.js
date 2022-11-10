@@ -105,10 +105,20 @@ const updateRenting = async (req, res) => {
 const deleteRenting = async (req, res) => {
     const {id} = req.params;
     try{
+        
         const deleteRenting = await Renting.findByIdAndDelete({_id:id});
+        let name= deleteRenting.name;
+        let amount= deleteRenting.amount;
+        const findItem = await Item.findOne({name});
+        let stock1 = findItem.stock+amount;
+        const itemUpdate = await Item.updateOne(
+            {name},
+            {$set:{'stock':stock1}},
+        );
         return res.status(200).json({
             succes:true,
             deleteRenting,
+            itemUpdate,
             message:'Renta eliminada con exito'
         });
 
