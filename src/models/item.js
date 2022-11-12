@@ -23,5 +23,8 @@ const itemShema = new Schema({
         type: Number,
         require:true
     },
+    url:{
+        type: String
+    }
 },{timestamps:true});
 module.exports = model("Item", itemShema);

@@ -3,7 +3,7 @@ const userId = require('../models/user');
 
 //LLENAR INVENTARIO
 const createItem= async (req,res)=>{
-    const {name, time, price, type, stock}= req.body;
+    const {name, time, price, type, stock, url}= req.body;
     
     try{
         let newItem = await item.findOne({name});
@@ -67,7 +67,7 @@ const deleteItem= async (req, res) => {
 }
 
 const updateItem = async (req, res) => {
-    const {name, time, price, type, stock} = req.body;
+    const {name, time, price, type, stock, url} = req.body;
     try {
         let find = await item.findOne({name});
         if(find){
