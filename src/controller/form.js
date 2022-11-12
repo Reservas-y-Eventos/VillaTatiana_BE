@@ -9,12 +9,12 @@ const createReservation = async (req,res)=>{
     try {
         let validation = await Form.find({ date });
         if(validation.length>=1){
-        if(validation[0].service == "finca"){
+        if(validation[0].service == "Finca"){
             return res.status(400).json({
                 succes: false,
                 error: 'ya se reservo toda la finca, no puede reservar un sitio'
             });
-        }else if(validation[0].service != "finca" && service=="finca"){
+        }else if(validation[0].service != "Finca" && service=="Finca"){
             return res.status(400).json({
                 succes: false,
                 error: 'no puede reservar la finca, ya se reservo un sitio menor'
