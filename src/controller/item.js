@@ -49,9 +49,11 @@ const listItem = async (req, res) => {
 
 
 const deleteItem= async (req, res) => {
-    const {name} = req.params;
+    const {name} = req.body;
     try{
-        const deleteItem = await item.findOneAndDelete({_name:name});
+        
+        const deleteItem = await item.findOneAndDelete({name});
+        console.log(deleteItem)
         return res.status(200).json({
             succes:true,
             deleteItem

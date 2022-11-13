@@ -19,6 +19,10 @@ const siteShema =  new Schema({
     description: {
         type: String,
         required:true
+    },
+    url:{
+        type: [String]
     }
+
 },{timestamps:true});
 module.exports = model("Sites", siteShema);

@@ -132,7 +132,7 @@ const deleteRenting = async (req, res) => {
 }
 
 const listRenting = async (req, res) => {
-    const {name}=req.body;
+    const {name}=req.query;
     try {
         const info =[];
         const rents = await Renting.find({name});
