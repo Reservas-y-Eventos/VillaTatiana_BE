@@ -11,7 +11,7 @@ mongoose.connect('mongodb://localhost/villaTatiana', { useNewUrlParser: true })
     .catch((err) => console.log(`ERROR to connect : ${err.message}`));
 
     module.exports = mongoose;
-
+*/
 /*
 datos host*/
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true })
