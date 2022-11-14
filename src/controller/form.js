@@ -73,7 +73,7 @@ const createReservation = async (req,res)=>{
 
 //BUSCAR RESERVACION EN EL CALENDARIO POR ID
 const getReservation = async(req,res)=>{
-    const {reservationId} = req.params;
+    const {reservationId} = req.query;
     try {
         const reservation = await Form.findById({_id:reservationId});
         return res.status(200).json({

@@ -4,7 +4,8 @@ const { getReservation, getReservations, createReservation, updateReservation, d
 const router = Router();
 
 router.get('/all', getReservations );
-router.get('/reservation/:reservationId',getReservation);
+//buscar la reserva por id
+router.get('/reservation',getReservation);
 //agregar reserva
 router.post('/create',createReservation);
 router.put('/update/:reservationId',updateReservation);
