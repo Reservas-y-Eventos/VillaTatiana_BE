@@ -134,8 +134,7 @@ const updateReservation = async(req,res) =>{
 
 //ELIMINAR RESERVACION EN EL CALENDARIO
 const deleteReservation = async(req,res)=>{
-    const {reservationId} = req.params;
-    console.log(reservationId);
+    const {reservationId} = req.query;
     try {
         const variable = await Form.findByIdAndDelete({_id:reservationId});
         return res.status(200).json({
