@@ -103,7 +103,7 @@ const updateRenting = async (req, res) => {
 }
 
 const deleteRenting = async (req, res) => {
-    const {id} = req.params;
+    const {id} = req.query;
     try{
         
         const deleteRenting = await Renting.findByIdAndDelete({_id:id});
